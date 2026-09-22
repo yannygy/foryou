@@ -42,7 +42,6 @@
       overflow-x: hidden;
     }
 
-    /* BACKGROUND DEKORASI BUNGA & BONEKA BESAR */
     .bg-decor {
       position: fixed;
       top: 0;
@@ -223,7 +222,6 @@
       display: none;
     }
 
-    /* DESAIN CONFESSION YANG TERATUR & TIDAK ACAK */
     .big-confession {
       font-family: 'Fredoka', cursive;
       font-size: 1.5rem;
@@ -334,7 +332,7 @@
 </head>
 <body>
 
-  <!-- Audio 1, Audio 2, dan Audio 3 Lengkap -->
+  <!-- Audio Elements -->
   <audio id="music1" loop preload="auto">
     <source src="https://files.catbox.moe/rvjhuf.mp3" type="audio/mpeg">
   </audio>
@@ -411,7 +409,7 @@
       </div>
     </div>
 
-    <!-- STEP 6: PESAN UTAMA (CONFESSION TERATUR) -->
+    <!-- STEP 6: PESAN UTAMA -->
     <div class="page" id="stepConfession">
       <div class="cute-card">
         <div class="bear-accent">💖🧸💖</div>
@@ -455,7 +453,7 @@
 
       const activeSong = songs[index];
       if (activeSong) {
-        activeSong.play().catch(err => console.log("Audio Error:", err));
+        activeSong.play().catch(err => console.log("Audio Play Error:", err));
       }
     }
 
@@ -524,8 +522,8 @@
 
     /* STEP 1 */
     function startStep1() {
+      playSong(0);
       document.getElementById('env1').classList.add('open');
-      playSong(0); // Putar Musik 1
       triggerSurpriseBurst();
 
       setTimeout(() => {
@@ -557,8 +555,8 @@
 
     /* STEP 2 */
     function startStep2() {
+      playSong(1);
       document.getElementById('env2').classList.add('open');
-      playSong(1); // Putar Musik 2
       triggerSurpriseBurst();
 
       setTimeout(() => {
@@ -588,10 +586,10 @@
       showStep('stepEnv3');
     }
 
-    /* STEP 3 & UTAMA (RAPI & BERURUTAN) */
+    /* STEP 3 */
     function startStep3() {
+      playSong(2);
       document.getElementById('env3').classList.add('open');
-      playSong(2); // Putar Musik 3
       triggerSurpriseBurst();
 
       setTimeout(() => {
@@ -606,28 +604,23 @@
       const bigConf = document.getElementById('bigConfession');
       const choice = document.getElementById('choiceContainer');
 
-      // Reset tampilan
       typed3.innerHTML = "";
       typed4.innerHTML = "";
       bigConf.classList.remove('show');
       choice.classList.remove('show');
 
-      // 1. Tulis teks pembuka
       await typeSentence("Aku cuma pengen kamu tahu...", typed3);
       await new Promise(r => setTimeout(r, 1200));
 
-      // 2. Tampilkan teks utama confession
       bigConf.classList.add('show');
       await new Promise(r => setTimeout(r, 2000));
 
-      // 3. Tulis kalimat penutup
       await typeSentence("Aku nggak tahu kamu bakal jawab apa...", typed4);
       await new Promise(r => setTimeout(r, 1200));
 
       await typeSentence("Tapi... kamu mau ga jadi pacar aku? 🥺💗", typed4);
       await new Promise(r => setTimeout(r, 1000));
 
-      // 4. Tampilkan tombol pilihan
       choice.classList.add('show');
     }
 
@@ -636,18 +629,11 @@
     const resultBox = document.getElementById('resultBox');
     const resultText = document.getElementById('resultText');
 
+    /* Opsi Langsung Redirect ke WhatsApp */
     btnYes.addEventListener('click', () => {
-      triggerSurpriseBurst();
-      document.getElementById('choiceContainer').classList.remove('show');
-      
-      resultText.innerHTML = "AAAAA SERIUS?! 😭💗<br>Makasih ya Zawaaa... Membuka WhatsApp... ✨🌸";
-      resultBox.style.display = 'block';
-
-      setTimeout(() => {
-        const phoneNumber = "62882001163626";
-        const message = encodeURIComponent("fiann aku mau kok jadi pacar kamu");
-        window.location.href = `https://wa.me/${phoneNumber}?text=${message}`;
-      }, 1500);
+      const phoneNumber = "62882001163626";
+      const message = encodeURIComponent("fiannn akuuu mauuu kokkk jadii pacarr kamuuu");
+      window.location.href = `https://wa.me/${phoneNumber}?text=${message}`;
     });
 
     btnThink.addEventListener('click', () => {
