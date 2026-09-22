@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Zawa 💌</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Mali:wght@500;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-color: #fff0f5;
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --primary-pink: #ff85a2;
+      --dark-pink: #ff477e;
+      --accent-red: #ff2a55;
+      --soft-white: #ffffff;
+      --text-color: #5c3d46;
+      --shadow: 0 10px 30px rgba(255, 133, 162, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #ffe5ec 0%, #fff0f5 50%, #ffe3e8 100%);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 20px 0;
+      overflow-x: hidden;
+    }
+
+    /* BACKGROUND DEKORASI BUNGA & BONEKA BESAR */
+    .bg-decor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .bg-item {
+      position: absolute;
+      opacity: 0.45;
+      filter: drop-shadow(0 4px 10px rgba(255, 182, 193, 0.4));
+      animation: floatBg 7s infinite ease-in-out;
+    }
+
+    @keyframes floatBg {
+      0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+      50% { transform: translateY(-25px) rotate(12deg) scale(1.08); }
+    }
+
+    .app-container {
+      width: 90%;
+      max-width: 420px;
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .page {
+      display: none;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    .page.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .cute-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 28px;
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      border: 3px solid #ffffff;
+      width: 100%;
+      position: relative;
+    }
+
+    .envelope-wrapper {
+      perspective: 1000px;
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .envelope {
+      width: 260px;
+      height: 170px;
+      background: #ffffff;
+      border-radius: 18px;
+      border: 3px solid #ffb3c1;
+      position: relative;
+      box-shadow: 0 12px 35px rgba(255, 133, 162, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.4s ease;
+    }
+
+    .envelope-wrapper:hover .envelope {
+      transform: translateY(-5px);
+    }
+
+    .envelope-flap {
+      position: absolute;
+      top: -2px;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: #ffe6ed;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top;
+      transition: transform 0.6s ease;
+      border-top: 3px solid #ffb3c1;
+      z-index: 3;
+    }
+
+    .envelope.open .envelope-flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+
+    .envelope-seal {
+      width: 40px;
+      height: 40px;
+      background: var(--dark-pink);
+      border-radius: 50%;
+      position: absolute;
+      top: 60px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 10px rgba(255, 71, 126, 0.3);
+      transition: opacity 0.4s ease;
+    }
+
+    .envelope.open .envelope-seal {
+      opacity: 0;
+    }
+
+    .tap-hint {
+      margin-top: 20px;
+      background: #ffffff;
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-family: 'Mali', cursive;
+      font-weight: 700;
+      color: var(--dark-pink);
+      box-shadow: 0 6px 18px rgba(255, 71, 126, 0.15);
+      border: 2px solid #ffccd5;
+      animation: pulseBtn 1.8s infinite ease-in-out;
+    }
+
+    @keyframes pulseBtn {
+      0%, 100% { transform: scale(1); box-shadow: 0 6px 18px rgba(255, 71, 126, 0.15); }
+      50% { transform: scale(1.06); box-shadow: 0 8px 24px rgba(255, 71, 126, 0.3); }
+    }
+
+    .chat-box {
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .typed-text {
+      font-family: 'Mali', cursive;
+      font-size: 1.15rem;
+      color: var(--text-color);
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .next-step-btn {
+      margin-top: 15px;
+      background: linear-gradient(135deg, var(--primary-pink), var(--dark-pink));
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-family: 'Fredoka', cursive;
+      font-size: 1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(255, 71, 126, 0.3);
+      animation: pulseBtn 1.8s infinite ease-in-out;
+      display: none;
+    }
+
+    /* DESAIN CONFESSION YANG TERATUR & TIDAK ACAK */
+    .big-confession {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.5rem;
+      color: var(--dark-pink);
+      margin: 15px 0;
+      display: none;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    .big-confession.show {
+      display: block;
+    }
+
+    .choice-container {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 15px;
+      display: none;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    .choice-container.show {
+      display: flex;
+    }
+
+    .btn-choice {
+      padding: 12px 20px;
+      border-radius: 50px;
+      font-family: 'Fredoka', cursive;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .btn-yes {
+      background: var(--dark-pink);
+      color: white;
+    }
+
+    .btn-think {
+      background: #ffe6ed;
+      color: var(--dark-pink);
+      border: 2px solid #ffb3c1;
+    }
+
+    .result-box {
+      margin-top: 15px;
+      padding: 16px;
+      background: #fff0f3;
+      border-radius: 20px;
+      border: 2px dashed var(--primary-pink);
+      display: none;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    .result-text {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.2rem;
+      color: var(--dark-pink);
+      line-height: 1.4;
+    }
+
+    .replay-btn {
+      margin-top: 18px;
+      background: transparent;
+      border: 2px solid var(--primary-pink);
+      color: var(--primary-pink);
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .pop-element {
+      position: fixed;
+      pointer-events: none;
+      z-index: 99;
+      animation: popAndFloat 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    @keyframes popAndFloat {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
+      }
+      20% {
+        opacity: 1;
+        transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.2) rotate(var(--rot));
+      }
+      100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty) - 80px)) scale(0.8) rotate(calc(var(--rot) + 20deg));
+      }
+    }
+
+    .bear-accent {
+      font-size: 2.5rem;
+      margin-bottom: 5px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Audio 1, Audio 2, dan Audio 3 Lengkap -->
+  <audio id="music1" loop preload="auto">
+    <source src="https://files.catbox.moe/rvjhuf.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="music2" loop preload="auto">
+    <source src="https://files.catbox.moe/k8thtj.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="music3" loop preload="auto">
+    <source src="https://files.catbox.moe/sx6rsa.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="bg-decor" id="bgDecor"></div>
+
+  <div class="app-container">
+
+    <!-- STEP 1: AMPLOP 1 -->
+    <div class="page active" id="stepEnv1">
+      <div class="envelope-wrapper" onclick="startStep1()">
+        <div class="envelope" id="env1">
+          <div class="envelope-flap"></div>
+          <div class="envelope-seal">💌</div>
+          <div class="bear-accent">🧸</div>
+        </div>
+        <div class="tap-hint">TAP TO OPEN ✨</div>
+      </div>
+    </div>
+
+    <!-- STEP 2: PESAN 1 -->
+    <div class="page" id="stepMsg1">
+      <div class="cute-card">
+        <div class="bear-accent">🌸🧸🌸</div>
+        <div class="chat-box">
+          <div class="typed-text" id="typedMsg1"></div>
+        </div>
+        <button class="next-step-btn" id="toEnv2Btn" onclick="goToStepEnv2()">
+          Lanjut ✨
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 3: AMPLOP 2 -->
+    <div class="page" id="stepEnv2">
+      <div class="envelope-wrapper" onclick="startStep2()">
+        <div class="envelope" id="env2">
+          <div class="envelope-flap"></div>
+          <div class="envelope-seal">💌</div>
+          <div class="bear-accent">🌸</div>
+        </div>
+        <div class="tap-hint">TAP TO OPEN ✨</div>
+      </div>
+    </div>
+
+    <!-- STEP 4: PESAN 2 -->
+    <div class="page" id="stepMsg2">
+      <div class="cute-card">
+        <div class="bear-accent">🌷✨🌷</div>
+        <div class="chat-box">
+          <div class="typed-text" id="typedMsg2"></div>
+        </div>
+        <button class="next-step-btn" id="toEnv3Btn" onclick="goToStepEnv3()">
+          Lanjut 🎀
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 5: AMPLOP 3 -->
+    <div class="page" id="stepEnv3">
+      <div class="envelope-wrapper" onclick="startStep3()">
+        <div class="envelope" id="env3">
+          <div class="envelope-flap"></div>
+          <div class="envelope-seal">💌</div>
+          <div class="bear-accent">🎀</div>
+        </div>
+        <div class="tap-hint">TAP TO OPEN ✨</div>
+      </div>
+    </div>
+
+    <!-- STEP 6: PESAN UTAMA (CONFESSION TERATUR) -->
+    <div class="page" id="stepConfession">
+      <div class="cute-card">
+        <div class="bear-accent">💖🧸💖</div>
+        <div class="chat-box">
+          <div class="typed-text" id="typedMsg3"></div>
+          
+          <div class="big-confession" id="bigConfession">
+            Zawa...<br>
+            <span style="font-size: 1.3rem; color: var(--accent-red);">sebenernya aku suka sama kamu. ❤️</span>
+          </div>
+
+          <div class="typed-text" id="typedMsg4"></div>
+        </div>
+
+        <div class="choice-container" id="choiceContainer">
+          <button class="btn-choice btn-yes" id="btnYes">💗 MAUUU</button>
+          <button class="btn-choice btn-think" id="btnThink">🥺 AKU PIKIR-PIKIR DULU</button>
+        </div>
+
+        <div class="result-box" id="resultBox">
+          <div class="result-text" id="resultText"></div>
+          <button class="replay-btn" id="replayBtn" onclick="resetAll()">🔄 Ulangi Dari Awal</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const songs = [
+      document.getElementById('music1'),
+      document.getElementById('music2'),
+      document.getElementById('music3')
+    ];
+
+    function playSong(index) {
+      songs.forEach(s => {
+        s.pause();
+        s.currentTime = 0;
+      });
+
+      const activeSong = songs[index];
+      if (activeSong) {
+        activeSong.play().catch(err => console.log("Audio Error:", err));
+      }
+    }
+
+    function stopAllAudio() {
+      songs.forEach(s => s.pause());
+    }
+
+    function createBgDecor() {
+      const container = document.getElementById('bgDecor');
+      const items = ['🌸', '🌺', '🌹', '🌻', '🌷', '🧸', '🐻', '💖', '✨', '🎀'];
+      
+      for (let i = 0; i < 28; i++) {
+        const el = document.createElement('div');
+        el.className = 'bg-item';
+        el.textContent = items[Math.floor(Math.random() * items.length)];
+        
+        el.style.left = Math.random() * 95 + '%';
+        el.style.top = Math.random() * 95 + '%';
+        el.style.fontSize = (Math.random() * 2.3 + 2.2) + 'rem';
+        el.style.animationDelay = (Math.random() * 6) + 's';
+        el.style.animationDuration = (Math.random() * 4 + 6) + 's';
+
+        container.appendChild(el);
+      }
+    }
+    createBgDecor();
+
+    function showStep(stepId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(stepId).classList.add('active');
+    }
+
+    function triggerSurpriseBurst() {
+      const elements = ['🌸', '🌺', '🌹', '🌻', '🌷', '🎀', '🧸', '🐻', '💖', '✨', '💕'];
+      for (let i = 0; i < 24; i++) {
+        const pop = document.createElement('div');
+        pop.className = 'pop-element';
+        pop.textContent = elements[Math.floor(Math.random() * elements.length)];
+
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 70 + Math.random() * 140;
+        const tx = Math.cos(angle) * distance + 'px';
+        const ty = Math.sin(angle) * distance + 'px';
+        const rot = (Math.random() * 60 - 30) + 'deg';
+
+        pop.style.left = '50%';
+        pop.style.top = '40%';
+        pop.style.setProperty('--tx', tx);
+        pop.style.setProperty('--ty', ty);
+        pop.style.setProperty('--rot', rot);
+        pop.style.fontSize = (1.5 + Math.random() * 1.5) + 'rem';
+
+        document.body.appendChild(pop);
+
+        setTimeout(() => pop.remove(), 2200);
+      }
+    }
+
+    async function typeSentence(text, element, delay = 70) {
+      element.innerHTML = "";
+      for (let i = 0; i < text.length; i++) {
+        element.innerHTML += text.charAt(i);
+        await new Promise(r => setTimeout(r, delay));
+      }
+    }
+
+    /* STEP 1 */
+    function startStep1() {
+      document.getElementById('env1').classList.add('open');
+      playSong(0); // Putar Musik 1
+      triggerSurpriseBurst();
+
+      setTimeout(() => {
+        showStep('stepMsg1');
+        runText1();
+      }, 1200);
+    }
+
+    async function runText1() {
+      const btn = document.getElementById('toEnv2Btn');
+      btn.style.display = 'none';
+
+      const target = document.getElementById('typedMsg1');
+      await typeSentence("Haii Zawaaa... 🌸", target);
+      await new Promise(r => setTimeout(r, 1200));
+
+      await typeSentence("Sebenernya aku udah lama mau bilang sesuatu sama kamu.", target);
+      await new Promise(r => setTimeout(r, 1500));
+
+      await typeSentence("Tapi bingung mau mulai dari mana 😭", target);
+      await new Promise(r => setTimeout(r, 1200));
+
+      btn.style.display = 'inline-block';
+    }
+
+    function goToStepEnv2() {
+      showStep('stepEnv2');
+    }
+
+    /* STEP 2 */
+    function startStep2() {
+      document.getElementById('env2').classList.add('open');
+      playSong(1); // Putar Musik 2
+      triggerSurpriseBurst();
+
+      setTimeout(() => {
+        showStep('stepMsg2');
+        runText2();
+      }, 1200);
+    }
+
+    async function runText2() {
+      const btn = document.getElementById('toEnv3Btn');
+      btn.style.display = 'none';
+
+      const target = document.getElementById('typedMsg2');
+      await typeSentence("Setiap kali mau bilang langsung...", target);
+      await new Promise(r => setTimeout(r, 1200));
+
+      await typeSentence("Rasanya malah jadi malu sendiri wkwk 🙈", target);
+      await new Promise(r => setTimeout(r, 1500));
+
+      await typeSentence("Jadi aku coba sampaikan lewat sini aja...", target);
+      await new Promise(r => setTimeout(r, 1200));
+
+      btn.style.display = 'inline-block';
+    }
+
+    function goToStepEnv3() {
+      showStep('stepEnv3');
+    }
+
+    /* STEP 3 & UTAMA (RAPI & BERURUTAN) */
+    function startStep3() {
+      document.getElementById('env3').classList.add('open');
+      playSong(2); // Putar Musik 3
+      triggerSurpriseBurst();
+
+      setTimeout(() => {
+        showStep('stepConfession');
+        runText3();
+      }, 1200);
+    }
+
+    async function runText3() {
+      const typed3 = document.getElementById('typedMsg3');
+      const typed4 = document.getElementById('typedMsg4');
+      const bigConf = document.getElementById('bigConfession');
+      const choice = document.getElementById('choiceContainer');
+
+      // Reset tampilan
+      typed3.innerHTML = "";
+      typed4.innerHTML = "";
+      bigConf.classList.remove('show');
+      choice.classList.remove('show');
+
+      // 1. Tulis teks pembuka
+      await typeSentence("Aku cuma pengen kamu tahu...", typed3);
+      await new Promise(r => setTimeout(r, 1200));
+
+      // 2. Tampilkan teks utama confession
+      bigConf.classList.add('show');
+      await new Promise(r => setTimeout(r, 2000));
+
+      // 3. Tulis kalimat penutup
+      await typeSentence("Aku nggak tahu kamu bakal jawab apa...", typed4);
+      await new Promise(r => setTimeout(r, 1200));
+
+      await typeSentence("Tapi... kamu mau ga jadi pacar aku? 🥺💗", typed4);
+      await new Promise(r => setTimeout(r, 1000));
+
+      // 4. Tampilkan tombol pilihan
+      choice.classList.add('show');
+    }
+
+    const btnYes = document.getElementById('btnYes');
+    const btnThink = document.getElementById('btnThink');
+    const resultBox = document.getElementById('resultBox');
+    const resultText = document.getElementById('resultText');
+
+    btnYes.addEventListener('click', () => {
+      triggerSurpriseBurst();
+      document.getElementById('choiceContainer').classList.remove('show');
+      
+      resultText.innerHTML = "AAAAA SERIUS?! 😭💗<br>Makasih ya Zawaaa... Membuka WhatsApp... ✨🌸";
+      resultBox.style.display = 'block';
+
+      setTimeout(() => {
+        const phoneNumber = "62882001163626";
+        const message = encodeURIComponent("fiann aku mau kok jadi pacar kamu");
+        window.location.href = `https://wa.me/${phoneNumber}?text=${message}`;
+      }, 1500);
+    });
+
+    btnThink.addEventListener('click', () => {
+      document.getElementById('choiceContainer').classList.remove('show');
+
+      resultText.innerHTML = "Gapapa kok hehe 😭💗<br>Aku tunggu jawaban kamu ya Zawa. ✨";
+      resultBox.style.display = 'block';
+    });
+
+    function resetAll() {
+      stopAllAudio();
+      document.getElementById('env1').classList.remove('open');
+      document.getElementById('env2').classList.remove('open');
+      document.getElementById('env3').classList.remove('open');
+      document.getElementById('resultBox').style.display = 'none';
+      showStep('stepEnv1');
+    }
+  </script>
+</body>
+</html>
