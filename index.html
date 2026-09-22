@@ -332,14 +332,14 @@
 </head>
 <body>
 
-  <!-- Audio 1, 2, dan 3 -->
-  <audio id="music1" loop preload="auto">
-    <source src="https://files.catbox.moe/rvjhuf.mp3" type="audio/mpeg">
+  <!-- Audio 1 Menggunakan Link Baru, Audio 2 & 3 Tetap -->
+  <audio id="music1" loop preload="auto" playsinline>
+    <source src="https://www.image2url.com/r2/default/audio/1790082708721-3b358627-c55f-4073-90bf-245b5bcde2b4.mp3" type="audio/mpeg">
   </audio>
-  <audio id="music2" loop preload="auto">
+  <audio id="music2" loop preload="auto" playsinline>
     <source src="https://files.catbox.moe/k8thtj.mp3" type="audio/mpeg">
   </audio>
-  <audio id="music3" loop preload="auto">
+  <audio id="music3" loop preload="auto" playsinline>
     <source src="https://files.catbox.moe/sx6rsa.mp3" type="audio/mpeg">
   </audio>
 
@@ -446,19 +446,30 @@
     ];
 
     function playSong(index) {
-      songs.forEach(s => {
-        s.pause();
-        s.currentTime = 0;
+      songs.forEach((s, i) => {
+        if (i !== index) {
+          s.pause();
+          s.currentTime = 0;
+        }
       });
 
       const activeSong = songs[index];
       if (activeSong) {
-        activeSong.play().catch(err => console.log("Audio Play Error:", err));
+        activeSong.currentTime = 0;
+        const playPromise = activeSong.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(err => {
+            console.log("Autoplay ditolak atau audio belum terload:", err);
+          });
+        }
       }
     }
 
     function stopAllAudio() {
-      songs.forEach(s => s.pause());
+      songs.forEach(s => {
+        s.pause();
+        s.currentTime = 0;
+      });
     }
 
     function createBgDecor() {
@@ -520,7 +531,7 @@
       }
     }
 
-    /* STEP 1: TAP TO OPEN -> Memutar Musik 1 */
+    /* STEP 1 */
     function startStep1() {
       playSong(0);
       document.getElementById('env1').classList.add('open');
@@ -553,7 +564,7 @@
       showStep('stepEnv2');
     }
 
-    /* STEP 2: TAP TO OPEN -> Memutar Musik 2 */
+    /* STEP 2 */
     function startStep2() {
       playSong(1);
       document.getElementById('env2').classList.add('open');
@@ -586,7 +597,7 @@
       showStep('stepEnv3');
     }
 
-    /* STEP 3: TAP TO OPEN -> Memutar Musik 3 */
+    /* STEP 3 */
     function startStep3() {
       playSong(2);
       document.getElementById('env3').classList.add('open');
@@ -629,7 +640,7 @@
     const resultBox = document.getElementById('resultBox');
     const resultText = document.getElementById('resultText');
 
-    /* Klik tombol MAUUU -> Langsung buka WA dengan teks kustom */
+    /* Direct Redirect WhatsApp */
     btnYes.addEventListener('click', () => {
       const phoneNumber = "62882001163626";
       const message = encodeURIComponent("fiannn akuuu mauuu kokkk jadii pacarr kamuuu");
